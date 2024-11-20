@@ -1,6 +1,6 @@
 import { useState, useEffect, useLayoutEffect } from 'react';
 // import { retrieveUsers } from '';
-// import type { UserData } from ''
+import type { UserData } from '';
 
 import ErrorPage from './ErrorPage';
 // import UserList from '';
@@ -8,7 +8,7 @@ import ErrorPage from './ErrorPage';
 
 const Home = () => {
 
-    const [users, setUsers] = useState<T[]>([]); 
+    const [users, setUsers] = useState<UserData[]>([]); 
     const [error, setError] = useState(false);
     const [loginCheck, setLoginCheck] = useState(false);   
 
