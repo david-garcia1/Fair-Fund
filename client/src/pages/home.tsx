@@ -1,15 +1,64 @@
+import { useState, useEffect, useLayoutEffect } from 'react';
+// import { retrieveUsers } from '';
+import type { UserData } from '';
+
+import ErrorPage from './ErrorPage';
+// import UserList from '';
+// import auth from '';
+
 const Home = () => {
-  return (
-    <div className="home">
-      <h1>Welcome to the Home Page</h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque,
-        veritatis. Deserunt obcaecati ullam debitis cum ipsum nesciunt sequi
-        facilis consequuntur, quo molestiae eaque! Necessitatibus nesciunt
-        consectetur aliquid sint eius cumque.
-      </p>
-    </div>
-  );
-};
+
+    const [users, setUsers] = useState<UserData[]>([]); 
+    const [error, setError] = useState(false);
+    const [loginCheck, setLoginCheck] = useState(false);   
+
+    useEffect(() => {
+        if (loginCheck) {
+            // fetchUsers();
+        }
+    }, [loginCheck]);
+
+    useLayoutEffect(() => {
+        // checkLogin();
+    }, []);
+
+    const checkLogin = () => {
+        // if (auth.loggedIn()) {
+        //     setLoginCheck(true);
+        // }
+    };
+
+    const fetchUsers = async () = {
+        try {
+            // const data = await retrieveUsers();
+            // setUsers(data)
+        } catch (err) {
+            console.error('Failed to retrieve tickets:', err);
+            setError(true);
+        }
+    }
+
+    if(error) {
+        return <ErrorPage />;
+    }
+
+
+    return (
+        <>
+            {
+                !loginCheck ? (
+                    <div className=''>
+                        <h1>
+                            Log in!
+                        </h1>
+                    </div>
+                ) : (
+                    <div>placeholder</div>
+                    // <UserList users={users} />
+                )
+            }
+        </>
+    )
+}
 
 export default Home;
