@@ -1,47 +1,60 @@
 import { useState, useEffect, useLayoutEffect } from 'react';
-// import { retrieveUsers } from '';
-import type { UserData } from '';
+import { Link } from 'react-router-dom';
 
+// import { retrieveTransactions }from '';
 import ErrorPage from './ErrorPage';
-// import UserList from '';
-// import auth from '';
+
+import { ApiMessage } from '../Interfaces/Apimessage';
+
+import auth from '../utils/auth';
+
+const graphStates = ['Week', 'Month', 'YTD'];
 
 const Home = () => {
 
-    const [users, setUsers] = useState<UserData[]>([]); 
+    // const [Transactions, setTransactions] = useState<TransactionData[]>([]);
     const [error, setError] = useState(false);
     const [loginCheck, setLoginCheck] = useState(false);   
 
-    useEffect(() => {
-        if (loginCheck) {
-            // fetchUsers();
-        }
-    }, [loginCheck]);
-
-    useLayoutEffect(() => {
-        // checkLogin();
-    }, []);
-
     const checkLogin = () => {
-        // if (auth.loggedIn()) {
-        //     setLoginCheck(true);
-        // }
+        if (auth.loggedIn()) {
+            setLoginCheck(true);
+        }
     };
 
-    const fetchUsers = async () = {
+    const fetchTransactions = async () => {
         try {
-            // const data = await retrieveUsers();
-            // setUsers(data)
+            // const data = await retrieveTransactions();
+            // setTransactions(data);
         } catch (err) {
-            console.error('Failed to retrieve tickets:', err);
+            console.error('Failed to retrieve previous transactions: ', err);
             setError(true);
         }
     }
 
+    const editTransaction = async (transactionId: number) : Promise<ApiMessage> => {
+        try {
+            const data = await editTransaction(transactionId);
+            fetchTransactions();
+            return data;
+        } catch (err) {
+            return Promise.reject(err);
+        }
+    }
+
+    useLayoutEffect(() => {
+        checkLogin();
+    }, []);
+
+    useEffect(() => {
+        if(loginCheck) {
+            fetchTransactions();
+        }
+    }, [loginCheck]);
+
     if(error) {
         return <ErrorPage />;
     }
-
 
     return (
         <>
@@ -54,7 +67,7 @@ const Home = () => {
                     </div>
                 ) : (
                     <div>placeholder</div>
-                    // <UserList users={users} />
+                    // transaction graph, transaction table go here. will build in components.
                 )
             }
         </>
