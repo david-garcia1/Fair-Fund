@@ -35,6 +35,10 @@ export function UserFactory(sequelize: Sequelize) {
             username: {
                 type: DataTypes.STRING,
                 allowNull: false,
+                unique: true,
+                validate: {
+                    len: [3, 40],
+                },
             },
             email: {
                 type: DataTypes.STRING,
@@ -72,7 +76,7 @@ export function UserFactory(sequelize: Sequelize) {
             sequelize,
             timestamps: false,
             underscored: true,
-            modelName: 'user',
+            modelName: 'User',
         }
     );
 
