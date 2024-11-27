@@ -39,6 +39,8 @@ export const createTransaction = async (req: Request, res: Response) => {
     }
 };
 
+
+// look into using Transaction.save instead of update.
 export const updateTransaction = async (req: Request, res: Response) => {
     const { transactionId } = req.params;
     const { newAmount } = req.body;

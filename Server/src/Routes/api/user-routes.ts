@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get('/:id', getUserById);
 
-router.post('/', createUser);
+router.post('/register', createUser);
 
 router.put('/:id', updateUser);
 
