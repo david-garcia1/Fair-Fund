@@ -1,6 +1,7 @@
 import { UserLogin } from '../Interfaces/UserLogin';
 
-const login = async (userInfo: UserLogin) => {
+
+const APIlogin = async (userInfo: UserLogin) => {
     try {
         const response = await fetch('/auth/login', {
             method: 'POST',
@@ -15,12 +16,11 @@ const login = async (userInfo: UserLogin) => {
         if (!response.ok) {
             throw new Error('User information not retrieved, check network tab.');
         }
-
         return data;
     } catch (err) {
         console.log('Error from user login: ', err);
-        return Promise.reject('Count not fetch user info');
+        return Promise.reject('Could not fetch user info');
     }
 }
 
-export {login};
+export {APIlogin};

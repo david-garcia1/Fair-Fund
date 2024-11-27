@@ -1,27 +1,39 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/home.tsx";
 import Market from "./pages/market.tsx";
+import Login from './Components/loginComponent';
+import Register from "./Components/Register.tsx";
+import { AuthProvider } from './Components/AuthContext/AuthContext.tsx';
+import ProtectedRoute from "./Components/AuthContext/ProtectedRoute.tsx";
 
-function App() {
+
+const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <header>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/market">Market</Link>
-          </li>
-        </ul>
-      </header>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/market" element={<Market />} />
-      </Routes>
-    </BrowserRouter>
-  );
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path="/home"
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          }
+          />
+          <Route path='/market'
+          element={
+            <ProtectedRoute>
+              <MarketPage />
+            </ProtectedRoute>
+          }
+          />
+        </Routes>
+      </Router>
+    </AuthProvider>
+  )
 }
+
 
 export default App;
