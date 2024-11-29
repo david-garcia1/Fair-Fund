@@ -14,7 +14,8 @@ export class Transaction extends Model<InferAttributes<Transaction>, InferCreati
     declare userId: ForeignKey<User['id']>;
     declare transactionId: CreationOptional<number>;
     declare amount: CreationOptional<number>;
-    declare expense: boolean;
+    declare Date: Date;
+    declare Description: String;
 }
 
 export function TransactionFactory(sequelize: Sequelize) {
@@ -29,10 +30,14 @@ export function TransactionFactory(sequelize: Sequelize) {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
-            expense: {
-                type: DataTypes.BOOLEAN,
+            Date: {
+                type: DataTypes.DATEONLY,
                 allowNull: false,
             },    
+            Description: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
             userId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,

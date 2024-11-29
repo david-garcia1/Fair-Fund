@@ -1,9 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-interface JwtPayload {
-    username: string;
-}
 
 export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
@@ -13,12 +10,12 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
 
         const secretKey = process.env.JWT_SECRET_KEY || '';
 
-        jwt.verify(token, secretKey, (err, user) => {
+        jwt.verify(token, secretKey, (err, userId) => {
             if (err) {
                 return res.sendStatus(403);
             }
 
-            req.user = user as JwtPayload;
+            req.userId = userId;
             return next();
         });
     } else {
