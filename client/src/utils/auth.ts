@@ -1,3 +1,10 @@
+import { jwtDecode } from 'jwt-decode';
+
+interface JwtPayload {
+    userId: string;
+    exp: number;
+}
+
 class AuthService {
 
     loggedIn() {
@@ -18,6 +25,22 @@ class AuthService {
     logout() {
         localStorage.removeItem('id_token');
         window.location.assign('/');
+    }
+
+    decodeToken(): (string | null) {
+        const token = this.getToken();
+
+        if (!token) {
+            return null;
+        }
+
+        try {
+            const decodedToken = jwtDecode<JwtPayload>(token);
+            return decodedToken.userId;
+        } catch (err) {
+            console.error("Error decoding token:", err);
+            return null
+        }
     }
 }
 

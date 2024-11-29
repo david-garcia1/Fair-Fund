@@ -1,17 +1,18 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/home.tsx";
-import Market from "./pages/market.tsx";
+import HomePage from "./Pages/Home.tsx";
+import Navbar from "./Components/Navbar.tsx";
+import MarketPage from "./Pages/market.tsx";
 import Login from './Components/loginComponent';
 import Register from "./Components/Register.tsx";
-import { AuthProvider } from './Components/AuthContext/AuthContext.tsx';
 import ProtectedRoute from "./Components/AuthContext/ProtectedRoute.tsx";
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const App: React.FC = () => {
-  return (
-    <AuthProvider>
+  return (  
       <Router>
+        <Navbar />
         <Routes>
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
@@ -31,7 +32,6 @@ const App: React.FC = () => {
           />
         </Routes>
       </Router>
-    </AuthProvider>
   )
 }
 

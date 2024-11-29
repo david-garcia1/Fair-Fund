@@ -1,77 +1,30 @@
-import { useState, useEffect, useLayoutEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import TransactionManager from '../Components/TableComponents/ParentComponent';
+import TransactionChart from "../Components/ChartComponent";
 
-// import { retrieveTransactions }from '';
-import ErrorPage from './ErrorPage';
 
-import { ApiMessage } from '../Interfaces/Apimessage';
 
-import auth from '../utils/auth';
+const HomePage: React.FC = () => {
 
-const graphStates = ['Week', 'Month', 'YTD'];
-
-const Home = () => {
-
-    // const [Transactions, setTransactions] = useState<TransactionData[]>([]);
-    const [error, setError] = useState(false);
-    const [loginCheck, setLoginCheck] = useState(false);   
-
-    const checkLogin = () => {
-        if (auth.loggedIn()) {
-            setLoginCheck(true);
-        }
-    };
-
-    const fetchTransactions = async () => {
-        try {
-            // const data = await retrieveTransactions();
-            // setTransactions(data);
-        } catch (err) {
-            console.error('Failed to retrieve previous transactions: ', err);
-            setError(true);
-        }
-    }
-
-    const editTransaction = async (transactionId: number) : Promise<ApiMessage> => {
-        try {
-            const data = await editTransaction(transactionId);
-            fetchTransactions();
-            return data;
-        } catch (err) {
-            return Promise.reject(err);
-        }
-    }
-
-    useLayoutEffect(() => {
-        checkLogin();
-    }, []);
-
-    useEffect(() => {
-        if(loginCheck) {
-            fetchTransactions();
-        }
-    }, [loginCheck]);
-
-    if(error) {
-        return <ErrorPage />;
-    }
 
     return (
-        <>
-            {
-                !loginCheck ? (
-                    <div className=''>
-                        <h1>
-                            Log in!
-                        </h1>
+        <div>
+            <div>
+                <div className="container my-4">
+                    <h1 className='text-center mb-4'>Your Fair Fund</h1>
+                    <div className='mb-5'>
+                        <div className='chart-container' style={{ width: '100%', height: "400px" }}>
+                            <TransactionChart />
+                        </div>
                     </div>
-                ) : (
-                    <div>placeholder</div>
-                    // transaction graph, transaction table go here. will build in components.
-                )
-            }
-        </>
+                    <div className='d-flex justify-content-between align-items-center mb-4'>
+                        <TransactionManager />
+                    </div>
+                </div>
+            </div>
+        </div>
     )
+
 }
 
-export default Home;
+export default HomePage;
