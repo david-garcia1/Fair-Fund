@@ -10,12 +10,12 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
 
         const secretKey = process.env.JWT_SECRET_KEY || '';
 
-        jwt.verify(token, secretKey, (err, userId) => {
+        jwt.verify(token, secretKey, (err, decoded: any) => {
             if (err) {
                 return res.sendStatus(403);
             }
 
-            req.userId = userId;
+            req.params.userId = decoded.id;
             return next();
         });
     } else {

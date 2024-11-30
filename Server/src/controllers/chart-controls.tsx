@@ -3,7 +3,7 @@ import { Transaction } from '../Models/transaction.js';
 import { Request, Response } from 'express';
 import { User } from '../Models/user.js';
 
-const calculateStartDate = (timeframe) => {
+const calculateStartDate = (timeframe: string) => {
     const now = new Date();
     if (timeframe === 'Week') {
         return new Date(now.setDate(now.getDate() - 7));
@@ -12,6 +12,7 @@ const calculateStartDate = (timeframe) => {
     } else if (timeframe === 'YTD') {
         return new Date(new Date().getFullYear(), 0, 1);
     }
+    return
 };
 
 

@@ -12,7 +12,7 @@ import type { User } from './user.js';
 
 export class Transaction extends Model<InferAttributes<Transaction>, InferCreationAttributes<Transaction>> {
     declare userId: ForeignKey<User['id']>;
-    declare transactionId: CreationOptional<number>;
+    declare transactionId: CreationOptional<string>;
     declare amount: CreationOptional<number>;
     declare Date: Date;
     declare Description: String;
@@ -22,8 +22,9 @@ export function TransactionFactory(sequelize: Sequelize) {
     Transaction.init(
         {
             transactionId: {
-                type: DataTypes.INTEGER,
-                autoIncrement: true,
+                type: DataTypes.UUID,
+                defaultValue: DataTypes.UUIDV4,
+                allowNull: false,
                 primaryKey: true,
             },
             amount: {
@@ -39,7 +40,8 @@ export function TransactionFactory(sequelize: Sequelize) {
                 allowNull: false,
             },
             userId: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.UUID,
+                defaultValue: DataTypes.UUIDV4,
                 allowNull: false,
                 references: {
                     model: "Users",
@@ -55,4 +57,6 @@ export function TransactionFactory(sequelize: Sequelize) {
             sequelize,
         }
     )
+
+    return Transaction;
 }
