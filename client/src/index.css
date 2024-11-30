@@ -13,6 +13,23 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.login-container {
+  min-height: 100vh; 
+  padding-top: 60px; 
+}
+
+.login-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  margin-top: 20px; 
+}
+
+.footer-text {
+  font-size: 14px;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -24,9 +41,7 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  width: 100%;
   min-height: 100vh;
 }
 
@@ -36,6 +51,7 @@ h1 {
 }
 
 button {
+  margin-top: 15px;
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -52,6 +68,14 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (min-width: 768px) {
+  .login-card {
+    max-width: 400px; 
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 @media (prefers-color-scheme: light) {
