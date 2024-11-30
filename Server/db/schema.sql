@@ -1,2 +1,2 @@
-DROP DATABASE IF EXISTS Fairfund_db;
-CREATE DATABASE Fairfund_db;
+DROP DATABASE IF EXISTS fairfund_db;
+CREATE DATABASE fairfund_db;
