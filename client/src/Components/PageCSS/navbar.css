@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.navbar-custom {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 100px;
+    background: green;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+}
+
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link {
+  font-size: 1.2rem; /* Adjust font size */
+}
+
+.navbar-custom .navbar-nav {
+  margin-top: 10px; /* Optional: Add space between navbar and nav items */
+}
+.navbar-custom {
+    padding-top: 15px;  /* Adjust the top padding */
+    padding-bottom: 15px; /* Adjust the bottom padding */
+  }
