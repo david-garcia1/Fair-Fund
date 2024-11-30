@@ -5,7 +5,7 @@ import  routes from './Routes/index.js';
 import sequelize from './config/connection.js';
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 5432;
 
 app.use(express.static('../client/dist'));
 
