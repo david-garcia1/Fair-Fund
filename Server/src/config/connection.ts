@@ -11,17 +11,12 @@ const sequelize = process.env.DB_URL
         process.env.DB_USER || '',
         process.env.DB_PASSWORD,
         {
-            host: 'localhost',
+            host: process.env.DB_HOST || 'localhost',
+            port: parseInt(process.env.DB_PORT || '5432', 10),
             dialect: 'postgres',
-            dialectOptions: {
-                decimalNumbers: true,
-            }
-        });
-
-        sequelize.authenticate().then(() => {
-            console.log('Connection to database has been established successfully.');
-        }).catch((err) => {
-            console.error('Unable to connect to database:', err);
+            // dialectOptions: {
+            //     decimalNumbers: true,
+            // }
         });
 
 
