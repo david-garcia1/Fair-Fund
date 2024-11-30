@@ -1,12 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "./Pages/Home.tsx";
+import HomePage from "./Pages/home.tsx";
 import Navbar from "./Components/Navbar.tsx";
 import MarketPage from "./Pages/market.tsx";
 import Login from './Components/loginComponent';
 import Register from "./Components/Register.tsx";
 import ProtectedRoute from "./Components/AuthContext/ProtectedRoute.tsx";
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const App: React.FC = () => {

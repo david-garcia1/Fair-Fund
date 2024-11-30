@@ -2,7 +2,7 @@ import { UserStructure } from '../Interfaces/UserStructure';
 
 const UserRegistration = async (UserData: UserStructure) => {
     try {
-        const response = await fetch('/api/users/register', {
+        const response = await fetch('/auth/register', {
             method: "POST",
             headers: { "content-Type": "application/json" },
             body: JSON.stringify({UserData})

@@ -10,7 +10,7 @@ import bcrypt from 'bcrypt';
 
 export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
     
-    declare id: CreationOptional<number>;
+    declare id: CreationOptional<string>;
     declare username: string;
     declare email: string;
     declare password: string;
@@ -28,8 +28,9 @@ export function UserFactory(sequelize: Sequelize) {
     User.init(
         {
             id: {
-                type: DataTypes.INTEGER,
-                autoIncrement: true,
+                type: DataTypes.UUID,
+                defaultValue: DataTypes.UUIDV4,
+                allowNull: false,
                 primaryKey: true,
             },
             username: {

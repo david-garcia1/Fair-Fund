@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { UserRegistration } from '../api/UserRegistration';
+import { UserRegistration } from '../api/UserRegistration.js';
 
 
 const Register: React.FC = () => {
@@ -36,7 +36,7 @@ const Register: React.FC = () => {
         }
 
         try {
-            await UserRegistration(formData);
+            await UserRegistration({username, email, password});
             setFormData({ username: '', email: '', password: '', confirmPassword: ''});
             setError(null);
         } catch (err) {

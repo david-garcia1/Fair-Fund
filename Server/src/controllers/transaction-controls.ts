@@ -2,8 +2,10 @@ import { Request, Response } from 'express';
 import { User } from '../Models/user.js';
 import { Transaction } from '../Models/transaction.js';
 
+
+
 export const getAllUserTransactions = async (req: Request, res: Response) => {
-    const { id } = req.params.userId;
+    const id  = req.params.id;
     try {
         const user = await User.findByPk(id);
         if (user) {
@@ -20,7 +22,7 @@ export const getAllUserTransactions = async (req: Request, res: Response) => {
 };
 
 export const createTransaction = async (req: Request, res: Response) => {
-    const { id } = req.params.userId;
+    const id: string = req.params.userId;
     const { amount, Date, Description } = req.body;
     try {
         const user = await User.findByPk(id);
@@ -43,8 +45,8 @@ export const createTransaction = async (req: Request, res: Response) => {
 
 // look into using Transaction.save instead of update.
 export const updateTransaction = async (req: Request, res: Response) => {
-    const { transactionId } = req.params.transactionId;
-    const { userId } = req.params.userId
+    const  transactionId  = req.params.transactionId;
+    const userId  = req.params.userId
     const { newAmount, Date, Description } = req.body;
     try {
         const [updatedTransaction] = await Transaction.update(
@@ -69,8 +71,8 @@ export const updateTransaction = async (req: Request, res: Response) => {
 };
 
 export const deleteTransaction = async (req: Request, res: Response) => {
-    const { transactionId } = req.params;
-    const { userId } = req.params.userId;
+    const transactionId  = req.params.transactionId;
+    const  userId  = req.params.userId;
     try {
         const targetTransaction = await Transaction.destroy(
             { where: 
