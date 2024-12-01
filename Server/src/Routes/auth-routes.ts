@@ -33,6 +33,6 @@ const router = Router();
 
 router.post('/login', login);
 
-router.post('/register', createUser);
+router.post('/register',  createUser);
 
 export default router;

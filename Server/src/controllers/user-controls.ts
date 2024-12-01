@@ -22,6 +22,8 @@ export const getUserById = async (req: Request, res: Response) => {
 export const createUser = async (req: Request, res: Response) => {
     const { username, email, password } = req.body;
 
+    console.log(username);
+
     if (!username || !email || !password) {
         res.status(400).json({ message: "All fields are required." });
     } else {
