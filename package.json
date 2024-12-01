@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npm i && npm run build && npm run start:dev",
     "start": "npm run client:build && npm run server",
-    "start:dev": "concurrently \"npm run server:dev\" \"wait-on tcp:3001 && npm run client:dev\"",
+    "start:dev": "concurrently \"npm run server:dev\" \"wait-on tcp:5432 && npm run client:dev\"",
     "server": "cd Server && npm start",
     "server:dev": "cd Server && npm run dev",
     "install": "cd Server && npm i && cd ../client && npm i",

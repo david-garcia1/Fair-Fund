@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "/client/src/Pages/home.tsx";
+import HomePage from "./Pages/home.tsx";
 import Navbar from "./Components/Navbar.tsx";
 import MarketPage from "./Pages/market.tsx";
 import Login from './Components/loginComponent';
@@ -16,7 +16,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
-          <Route path="/home"
+          <Route path="/"
           element={
             <ProtectedRoute>
               <HomePage />

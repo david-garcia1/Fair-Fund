@@ -5,7 +5,7 @@ const UserRegistration = async (UserData: UserStructure) => {
         const response = await fetch('/auth/register', {
             method: "POST",
             headers: { "content-Type": "application/json" },
-            body: JSON.stringify({UserData})
+            body: JSON.stringify(UserData)
         });
 
         if (!response.ok) {
