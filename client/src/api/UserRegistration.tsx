@@ -1,19 +1,23 @@
 import { UserStructure } from '../Interfaces/UserStructure';
 
-const UserRegistration = async (UserData: UserStructure) => {
+const UserRegistration = async (UserData: UserStructure): Promise<UserStructure> => {
+    
     try {
+        console.log('Request Body:', JSON.stringify(UserData));
+        
         const response = await fetch('/auth/register', {
             method: "POST",
             headers: { "content-Type": "application/json" },
             body: JSON.stringify(UserData)
         });
+        
 
         if (!response.ok) {
-            const data = await response.json();
-            throw new Error(data.message || 'User Registration failed.');
-        } else {
-            return;
-        }
+            throw new Error('invalid API response, check network tab!');
+        } 
+          
+        const data = response.json();
+        return data;
     } catch (err) {
         console.error(err);
         return Promise.reject('Could not register User.');

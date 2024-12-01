@@ -1,4 +1,4 @@
-import { Router, Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 import { User } from '../Models/user.js';
 import { createUser } from '../controllers/user-controls.js';
 import jwt from 'jsonwebtoken';
@@ -29,10 +29,10 @@ const login = async (req: Request, res: Response) => {
 };
 
 
-const router = Router();
+const router = express.Router();
 
 router.post('/login', login);
 
 router.post('/register',  createUser);
 
-export default router;
+export { router as authRoutes};

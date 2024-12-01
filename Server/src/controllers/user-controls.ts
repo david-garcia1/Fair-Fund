@@ -44,6 +44,7 @@ export const createUser = async (req: Request, res: Response) => {
 };
 
 export const updateUser = async (req: Request, res: Response) => {
+    console.log('request recieved:', req.body)
     const { id } = req.params;
     const { username, password } = req.body;
     try {
