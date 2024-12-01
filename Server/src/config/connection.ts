@@ -14,10 +14,13 @@ const sequelize = process.env.DB_URL
             host: process.env.DB_HOST || 'localhost',
             port: parseInt( '5432', 10),
             dialect: 'postgres',
-            // dialectOptions: {
-            //     decimalNumbers: true,
-            // }
+            logging: console.log,
+            dialectOptions: {
+                decimalNumbers: true,
+            }
         });
 
+sequelize.authenticate().then(() => console.log("database connected!"))
+.catch(err => console.error(err));
 
 export default sequelize;

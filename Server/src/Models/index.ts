@@ -6,9 +6,12 @@ const User = UserFactory(sequelize);
 const Transaction = TransactionFactory(sequelize);
 
 User.hasMany(Transaction, {
+
     onDelete: 'CASCADE',
 });
 
 Transaction.belongsTo(User);
+
+
 
 export { sequelize, User, Transaction};

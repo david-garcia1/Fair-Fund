@@ -22,8 +22,6 @@ export const getUserById = async (req: Request, res: Response) => {
 export const createUser = async (req: Request, res: Response) => {
     const { username, email, password } = req.body;
 
-    console.log(username);
-
     if (!username || !email || !password) {
         res.status(400).json({ message: "All fields are required." });
     } else {
@@ -38,13 +36,13 @@ export const createUser = async (req: Request, res: Response) => {
                 res.status(201).json(newUser);
             }
         } catch (err: any) {
+            console.log(err);
             res.status(400).json({ message: err.message });
         }
     }
 };
 
 export const updateUser = async (req: Request, res: Response) => {
-    console.log('request recieved:', req.body)
     const { id } = req.params;
     const { username, password } = req.body;
     try {

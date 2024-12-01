@@ -6,6 +6,6 @@ import { authenticateToken } from '../Middleware/auth.js';
 const router = express.Router();
 
 router.use('/auth', authRoutes);
-router.all('/api/*', authenticateToken, apiRoutes);
+router.all('/api', authenticateToken, apiRoutes);
 
 export {router as routes };

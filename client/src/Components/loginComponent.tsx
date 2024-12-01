@@ -11,7 +11,9 @@ const LoginPage: React.FC= () => {
     const [password, setPassword] = useState<string>('');
 
     const handleLogin = async () => {
+      event?.preventDefault();
         const data = await APIlogin({ username, password});
+        console.log(data);
         login(data);
     };
 

@@ -36,7 +36,6 @@ const Register: React.FC = () => {
         }
 
         try {
-            console.log('formdata:', {username, email, password});
             await UserRegistration({username, email, password});
             console.log(formData);
             setFormData({ username: '', email: '', password: '', confirmPassword: ''});
