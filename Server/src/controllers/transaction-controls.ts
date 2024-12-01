@@ -23,7 +23,9 @@ export const getAllUserTransactions = async (req: Request, res: Response) => {
 
 export const createTransaction = async (req: Request, res: Response) => {
     const id: string = req.params.userId;
+    console.log(id);
     const { amount, Date, Description } = req.body;
+    console.log( amount, Date, Description);
     try {
         const user = await User.findByPk(id);
         if (user) {
@@ -45,7 +47,7 @@ export const createTransaction = async (req: Request, res: Response) => {
 
 // look into using Transaction.save instead of update.
 export const updateTransaction = async (req: Request, res: Response) => {
-    const  transactionId  = req.params.transactionId;
+    const transactionId  = req.params.transactionId;
     const userId  = req.params.userId
     const { newAmount, Date, Description } = req.body;
     try {
@@ -72,7 +74,7 @@ export const updateTransaction = async (req: Request, res: Response) => {
 
 export const deleteTransaction = async (req: Request, res: Response) => {
     const transactionId  = req.params.transactionId;
-    const  userId  = req.params.userId;
+    const userId = req.params.userId;
     try {
         const targetTransaction = await Transaction.destroy(
             { where: 

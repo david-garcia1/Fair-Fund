@@ -1,89 +1,87 @@
-import React, { useState, useEffect } from "react";
-import { Transaction } from "../../Interfaces/Transaction";
+import React, { useState, useEffect } from 'react';
+import Modal from '@mui/material/Modal';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import { Transaction } from '../../Interfaces/Transaction';
 
 interface TransactionModalProps {
   isOpen: boolean;
-  transaction: Transaction | null; 
+  transaction: Transaction | null;
   onClose: () => void;
-  onSave: (transaction: Partial<Transaction>) => void | Promise<void>;
+  onSave: (transaction: Transaction) => void;
 }
 
-const TransactionModal: React.FC<TransactionModalProps> = ({
-  isOpen,
-  transaction,
-  onClose,
-  onSave,
-}) => {
-  const [formData, setFormData] = useState<Partial<Transaction>>({
-    amount: 0,
-    description: "",
-    Date: "",
+const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, transaction, onClose, onSave }) => {
+  const [formValues, setFormValues] = useState({
+    date: '',
+    description: '',
+    amount: '',
   });
 
-  
   useEffect(() => {
     if (transaction) {
-      setFormData({
-        amount: transaction.amount,
-        description: transaction.description,
-        Date: transaction.Date,
+      setFormValues({
+        date: transaction.Date || '',
+        description: transaction.description || '',
+        amount: transaction.amount.toString() || '',
       });
     } else {
-      setFormData({ amount: 0, description: "", Date: "" }); 
+      setFormValues({ date: '', description: '', amount: '' });
     }
   }, [transaction]);
 
- 
-  const handleChange = (field: keyof Transaction) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [field]: event.target.value });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormValues({ ...formValues, [e.target.name]: e.target.value });
   };
 
-  const handleSave = async () => {
-    if (!formData.amount || !formData.Date || !formData.description) {
-      alert("Please fill in all fields.");
-      return;
-    }
-  
-    try {
-      await onSave(formData); 
-      onClose(); 
-    } catch (error) {
-      console.error("Failed to save transaction:", error);
-      alert("There was an error saving the transaction.");
-    }
+  const handleSubmit = () => {
+    onSave({
+      ...transaction,
+      date: formValues.date,
+      description: formValues.description,
+      amount: parseFloat(formValues.amount),
+    } as Transaction);
   };
-  
-
-  if (!isOpen) return null;
 
   return (
-    <div className="modal">
-      <div className="modal-content">
-        <h2>{transaction ? "Edit Transaction" : "Add Transaction"}</h2>
-        <input
-          type="number"
-          placeholder="Amount"
-          value={formData.amount}
-          onChange={handleChange("amount")}
-        />
-        <input
-          type="text"
-          placeholder="Description"
-          value={formData.description}
-          onChange={handleChange("description")}
-        />
-        <input
+    <Modal open={isOpen} onClose={onClose}>
+      <div style={{ padding: '20px', background: 'white', margin: '10% auto', width: '30%' }}>
+        <h2>{transaction ? 'Edit Transaction' : 'Add Transaction'}</h2>
+        <TextField
+          name="date"
           type="date"
-          value={formData.Date}
-          onChange={handleChange("Date")}
+          value={formValues.date}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
         />
-        <div className="modal-actions">
-          <button onClick={handleSave}>Save</button>
-          <button onClick={onClose}>Cancel</button>
-        </div>
+        <TextField
+          name="description"
+          label="Description"
+          value={formValues.description}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          name="amount"
+          label="Amount"
+          type="number"
+          value={formValues.amount}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+        />
+        <Button onClick={handleSubmit} variant="contained" color="primary">
+          Save
+        </Button>
+        <Button onClick={onClose} variant="outlined" color="secondary">
+          Cancel
+        </Button>
       </div>
-    </div>
+    </Modal>
   );
 };
 
 export default TransactionModal;
+

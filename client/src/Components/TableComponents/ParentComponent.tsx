@@ -1,104 +1,77 @@
-import React, { useState, useEffect } from "react";
-import TransactionTable from "./Table";
-import TransactionModal from "./Modal";
-import {
-    fetchTransactions,
-    addTransaction,
-    updateTransaction,
-    deleteTransaction,
-} from "../../api/TransactionsAPI";
-import AuthService from '../../utils/auth';
-import { Transaction } from "../../Interfaces/Transaction";
+import React, { useState, useEffect } from 'react';
+import { fetchTransactions, addTransaction, updateTransaction, deleteTransaction } from '../../api/TransactionsAPI'; 
+import TransactionTable from './Table';
+import TransactionModal from './Modal';
+import { Transaction } from '../../Interfaces/Transaction';
 
 const TransactionManager: React.FC = () => {
-    const [transactions, setTransactions] = useState<Transaction[]>([]);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
 
-    const userId = AuthService.decodeToken;
-
-
-    useEffect(() => {
-        const grabTransactions = async () => {
-            try {
-                const response = await fetchTransactions();
-                const data = response;
-                setTransactions(data);
-            } catch (error) {
-                console.error("Error fetching transactions:", error);
-            }
-        };
-
-        grabTransactions();
-    }, [userId]);
-
-
-    const handleModalOpen = (transaction: Transaction | null = null) => {
-        setSelectedTransaction(transaction);
-        setIsModalOpen(true);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchTransactions();
+        setTransactions(data);
+      } catch (error) {
+        console.error('Error fetching transactions:', error);
+      }
     };
 
+    fetchData();
+  }, []);
 
-    const handleModalClose = () => {
-        setIsModalOpen(false);
-        setSelectedTransaction(null);
-    };
+  const handleEdit = (transaction: Transaction) => {
+    setSelectedTransaction(transaction);
+    setModalOpen(true);
+  };
 
+  const handleSave = async (transaction: Transaction) => {
+    try {
+      if (transaction.id) {
+        const updatedTransaction = await updateTransaction(transaction.id, transaction);
+        setTransactions(prev =>
+          prev.map(t => (t.id === transaction.id ? updatedTransaction : t))
+        );
+      } else {
+        const newTransaction = await addTransaction(transaction);
+        setTransactions(prev => [...prev, newTransaction]);
+      }
+    } catch (error) {
+      console.error('Error saving transaction:', error);
+    }
+    setModalOpen(false);
+  };
 
-    const handleCreateTransaction = async (newTransaction: Partial<Transaction>) => {
-        try {
-            const createdTransaction = await addTransaction({ ...newTransaction, userId });
-            setTransactions((prev) => [...prev, createdTransaction]);
-        } catch (error) {
-            console.error("Error creating transaction:", error);
-        }
-    };
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteTransaction(id);
+      setTransactions(prev => prev.filter(t => t.id !== id));
+    } catch (error) {
+      console.error('Error deleting transaction:', error);
+    }
+  };
 
+  return (
+    <div>
+      <h1>Transaction Management</h1>
+      <button onClick={() => setModalOpen(true)}>Add Transaction</button>
 
-    const handleEditTransaction = async (transactionId: number, updatedData: Partial<Transaction>) => {
-        try {
-            const updatedTransaction = await updateTransaction(transactionId, updatedData);
-            setTransactions((prev) =>
-                prev.map((transaction) => (transaction.id === transactionId ? updatedTransaction : transaction))
-            );
-        } catch (error) {
-            console.error("Error updating transaction:", error);
-        }
-    };
+      <TransactionTable 
+        transactions={transactions} 
+        onEdit={handleEdit} 
+        onDelete={handleDelete} 
+      />
 
-
-    const handleDeleteTransaction = async (transactionId: number) => {
-        try {
-            await deleteTransaction(transactionId);
-            setTransactions((prev) => prev.filter((transaction) => transaction.id !== transactionId));
-        } catch (error) {
-            console.error("Error deleting transaction:", error);
-        }
-    };
-
-    return (
-        <div>
-            <h1>Transaction Manager</h1>
-            <TransactionTable
-                transactions={transactions}
-                onEdit={handleModalOpen}
-                onDelete={handleDeleteTransaction}
-            />
-            <TransactionModal
-                isOpen={isModalOpen}
-                transaction={selectedTransaction}
-                onClose={handleModalClose}
-                onSave={async (transactionData) => {
-                    if (selectedTransaction) {
-                        await handleEditTransaction(selectedTransaction.id, transactionData);
-                    } else {
-                        await handleCreateTransaction(transactionData);
-                    }
-                }}
-            />
-
-        </div>
-    );
+      <TransactionModal 
+        isOpen={isModalOpen}
+        transaction={selectedTransaction}
+        onClose={() => setModalOpen(false)} 
+        onSave={handleSave} 
+      />
+    </div>
+  );
 };
 
 export default TransactionManager;

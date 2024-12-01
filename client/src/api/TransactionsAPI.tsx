@@ -1,8 +1,10 @@
 import { Transaction } from "../Interfaces/Transaction";
 import AuthService from '../utils/auth';
 
-export const fetchUserTransactions = async (timeframe: string, userId: string): Promise<Transaction[]> => {
+export const fetchUserTransactions = async (timeframe: string): Promise<Transaction[]> => {
     try {
+        const userId = AuthService.decodeToken();
+        console.log(userId);
         const response = await fetch(`/api/transactions/users/${userId}/${timeframe}`, {
             method: "GET",
             headers: {
@@ -24,9 +26,10 @@ export const fetchUserTransactions = async (timeframe: string, userId: string): 
     }
 };
 
-export const fetchTransactions = async () => {
+export const fetchTransactions = async () => {   
     const userId = AuthService.decodeToken();
-    const response = await fetch(`/api/transactions/users/${userId}`, {
+    console.log(userId);
+    const response = await fetch(`/api/transactions/${userId}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -39,7 +42,8 @@ export const fetchTransactions = async () => {
 
 export const addTransaction = async (transaction: any) => {
     const userId = AuthService.decodeToken();
-    const response = await fetch(`/api/transactions//users/${userId}`, {
+    console.log(userId);
+    const response = await fetch(`/api/transactions/${userId}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -53,7 +57,7 @@ export const addTransaction = async (transaction: any) => {
     return response.json();
 };
 
-export const updateTransaction = async (transactionId: number, transaction: any) => {
+export const updateTransaction = async (transactionId: string, transaction: any) => {
     const userId = AuthService.decodeToken();
     const response = await fetch(`api/transactions/users/${userId}/${transactionId}`, {
         method: "PUT",
@@ -69,7 +73,7 @@ export const updateTransaction = async (transactionId: number, transaction: any)
     return response.json();
 };
 
-export const deleteTransaction = async (transactionId: number) => {
+export const deleteTransaction = async (transactionId: string) => {
     const userId = AuthService.decodeToken();
     const response = await fetch(`/api/transactions/users/${userId}/${transactionId}`, {
         method: "DELETE",
