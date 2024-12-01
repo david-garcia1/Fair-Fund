@@ -19,7 +19,7 @@ const TransactionChart: React.FC = () => {
         }
 
         try {
-            const fectchedTransactions = await fetchUserTransactions(userId, timeframe);
+            const fectchedTransactions = await fetchUserTransactions(timeframe);
             setTransactions(fectchedTransactions);
         } catch (err) {
             console.error("Error fetching transactions:", err);
@@ -66,7 +66,7 @@ const TransactionChart: React.FC = () => {
                 plugins: {
                     title: {
                         display: true,
-                        text: `Transactions Over ${timeframe}`,
+                        text: `Transactions Over the last ${timeframe}`,
                     },
                 },
                 scales: {
@@ -79,6 +79,7 @@ const TransactionChart: React.FC = () => {
                     },
                 },
             },
+            
         });
 
         return () => {

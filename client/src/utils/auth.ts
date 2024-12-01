@@ -36,6 +36,7 @@ class AuthService {
 
         try {
             const decodedToken = jwtDecode<JwtPayload>(token);
+            console.log(decodedToken.userId);
             return decodedToken.userId;
         } catch (err) {
             console.error("Error decoding token:", err);
