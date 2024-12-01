@@ -6,11 +6,11 @@ import bcrypt from 'bcrypt';
 
 const login = async (req: Request, res: Response) => {
     const { username, password } = req.body;
-
+  
     const user = await User.findOne({
         where: { username },
     });
-
+    
     if (user) {
         
         const validPassword = await bcrypt.compare(password, user.password);
@@ -21,7 +21,7 @@ const login = async (req: Request, res: Response) => {
 
             const token = jwt.sign({ userId: user.id }, secretKey, {expiresIn: '1h' });
 
-            res.json({ token });
+            res.json(token);
             return;
         }
     }

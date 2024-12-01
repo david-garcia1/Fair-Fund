@@ -39,15 +39,6 @@ export function TransactionFactory(sequelize: Sequelize) {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            userId: {
-                type: DataTypes.UUID,
-                defaultValue: DataTypes.UUIDV4,
-                allowNull: false,
-                references: {
-                    model: "Users",
-                    key: "id",
-                },
-            }
         },
         {
             tableName: 'Transaction',
