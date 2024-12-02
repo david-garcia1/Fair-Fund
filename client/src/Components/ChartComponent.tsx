@@ -98,7 +98,7 @@ const TransactionChart: React.FC = () => {
     return (
         <div className="container">
             <h2>Transactions</h2>
-            <div className="btn-group mb-4">
+            <div className="btn-group">
                 <button className="btn btn-primary" onClick={() => setTimeframe("Week")}>
                     Last Week
                 </button>

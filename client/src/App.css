@@ -5,18 +5,19 @@
 }
 
 .container {
-  display: flex;
+  flex: 1;
   flex-direction: column;
+  overflow: auto;
   gap: 20px;
   margin: 0 auto;
   max-width: 1200px;
-  padding: 20px;
 }
 
+
 .chart-container {
+  flex: 0 0 auto;
+  margin-bottom: 10px;
   width: 100%;
-  height: 400px;
-  max-height: 600px;
   overflow: hidden;
 }
 
@@ -46,8 +47,10 @@ body {
 .table-title {
   justify-content: center;
   align-content: center;
-  padding-top: 20px;
+  padding-top: 0px;
+  top: 60px;
 }
+
 .logo {
   height: 6em;
   padding: 1.5em;

@@ -66,7 +66,7 @@ const TransactionManager: React.FC = () => {
 
   return (
     <div>
-      <h1 className="table-title">Transaction Management</h1>
+      <h2 className="table-title">Transaction Management</h2>
       <button className="add-button" onClick={() => setModalOpen(true)}>Add Transaction</button>
 
       <TransactionTable 
