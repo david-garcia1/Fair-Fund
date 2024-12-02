@@ -30,7 +30,7 @@ export const getTransactionsByTimeFrame = async (req: Request, res: Response) =>
                 {
                     where: {
                         userId: userId,
-                        Date: {
+                        date: {
                             [Op.gte]: startDate,
                             [Op.lte]: endDate,
                         },

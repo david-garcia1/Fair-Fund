@@ -8,7 +8,7 @@ interface TransactionTableProps {
   onDelete: (id: string) => void;
 }
 
-const TransactionTable: React.FC<TransactionTableProps> = ({ transactions, onEdit, onDelete }) => {
+const TransactionTable: React.FC<TransactionTableProps> = ({ transactions = [], onEdit, onDelete }) => {
   const columns: GridColDef[] = [
     { field: 'date', headerName: 'Date', flex: 1 },
     { field: 'description', headerName: 'Description', flex: 2 },
@@ -29,9 +29,13 @@ const TransactionTable: React.FC<TransactionTableProps> = ({ transactions, onEdi
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
+        columnVisibilityModel={{
+          transactionId: false
+        }}
         rows={transactions.map((transaction) => ({
-          id: transaction.id, // Still used internally
-          date: transaction.Date,
+          id: transaction.transactionId, //still used internally
+          transactionId: transaction.transactionId, 
+          date: transaction.date,
           description: transaction.description,
           amount: transaction.amount,
         }))}
@@ -39,9 +43,10 @@ const TransactionTable: React.FC<TransactionTableProps> = ({ transactions, onEdi
         pageSizeOptions={[5, 10, 15, 20]}
         initialState={{
           pagination: {
-            paginationModel: { pageSize: 10},
+            paginationModel: { pageSize: 10 },
           },
         }}
+
       />
     </div>
   );

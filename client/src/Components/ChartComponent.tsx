@@ -11,16 +11,15 @@ const TransactionChart: React.FC = () => {
     const chartRef = useRef<HTMLCanvasElement | null>(null);
 
     const fetchTransactions = async (timeframe: string) => {
-
-
         const userId = AuthService.decodeToken();
         if (!userId) {
+            console.error("User ID not found");
             return;
         }
 
         try {
-            const fectchedTransactions = await fetchUserTransactions(timeframe);
-            setTransactions(fectchedTransactions);
+            const fetchedTransactions = await fetchUserTransactions(timeframe);
+            setTransactions(fetchedTransactions);
         } catch (err) {
             console.error("Error fetching transactions:", err);
         }
@@ -31,7 +30,7 @@ const TransactionChart: React.FC = () => {
     }, [timeframe]);
 
     const getChartData = () => {
-        const labels = transactions.map(transaction => new Date(transaction.Date).toLocaleDateString());
+        const labels = transactions.map(transaction => new Date(transaction.date).toLocaleDateString());
         const data = transactions.map(transaction => transaction.amount);
 
         return {
@@ -79,25 +78,24 @@ const TransactionChart: React.FC = () => {
                     },
                 },
             },
-            
         });
 
         return () => {
             chart.destroy();
-        }
+        };
     }, [transactions, timeframe]);
 
     return (
         <div className="container">
             <h2>Transactions</h2>
             <div className="btn-group mb-4">
-                <button className="btn btn-primary" onClick={() => setTimeframe("Week")}>
+                <button className="btn btn-primary" onClick={() => setTimeframe("week")}>
                     Last Week
                 </button>
-                <button className="btn btn-primary" onClick={() => setTimeframe("Month")}>
+                <button className="btn btn-primary" onClick={() => setTimeframe("month")}>
                     Last Month
                 </button>
-                <button className="btn btn-primary" onClick={() => setTimeframe("YTD")}>
+                <button className="btn btn-primary" onClick={() => setTimeframe("ytd")}>
                     Year to Date
                 </button>
             </div>

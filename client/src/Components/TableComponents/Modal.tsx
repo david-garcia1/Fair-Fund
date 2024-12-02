@@ -19,9 +19,10 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, transaction
   });
 
   useEffect(() => {
+    console.log('transaction prop:', transaction);
     if (transaction) {
       setFormValues({
-        date: transaction.Date || '',
+        date: transaction.date || '',
         description: transaction.description || '',
         amount: transaction.amount.toString() || '',
       });
@@ -35,11 +36,19 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, transaction
   };
 
   const handleSubmit = () => {
+    const amount = parseFloat(formValues.amount);
+    if (isNaN(amount)) {
+      console.error('Invalid amount');
+      return;
+    }
+
+    const date = formValues.date ? new Date(formValues.date).toISOString().split('T')[0] : '';
+
     onSave({
       ...transaction,
-      date: formValues.date,
+      date: date,
       description: formValues.description,
-      amount: parseFloat(formValues.amount),
+      amount: isNaN(amount) ? 0 : amount,
     } as Transaction);
   };
 
