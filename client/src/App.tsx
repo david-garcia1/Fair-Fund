@@ -6,6 +6,7 @@ import MarketPage from "./Pages/market.tsx";
 import Login from './Components/loginComponent';
 import Register from "./Components/Register.tsx";
 import ProtectedRoute from "./Components/AuthContext/ProtectedRoute.tsx";
+import Footer from "./Components/Footer.tsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -31,6 +32,7 @@ const App: React.FC = () => {
           }
           />
         </Routes>
+        <Footer />
       </Router>
   )
 }
