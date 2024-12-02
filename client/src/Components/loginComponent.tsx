@@ -27,8 +27,8 @@ const LoginPage: React.FC= () => {
 
 
     return (
-        <Container className="login-container justify-content-center align-items-center mt-5">
-          <Row className="justify-content-center">
+        <Container className="login-container justify-content-center align-items-center login mt-5">
+          <Row className="">
             <Col xs={12} md={6} lg={4}>
               <div className="login-card p-4">
                 <h2 className="text-center">Login</h2>
