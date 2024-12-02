@@ -6,11 +6,17 @@ const User = UserFactory(sequelize);
 const Transaction = TransactionFactory(sequelize);
 
 User.hasMany(Transaction, {
-
+    foreignKey: 'userId',
+    sourceKey: 'id',
+    as: 'transactions',
     onDelete: 'CASCADE',
 });
 
-Transaction.belongsTo(User);
+Transaction.belongsTo(User, {
+    foreignKey: 'userId',
+    targetKey: 'id',
+    as: 'user',
+});
 
 
 

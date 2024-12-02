@@ -4,11 +4,10 @@ import AuthService from '../utils/auth';
 export const fetchUserTransactions = async (timeframe: string): Promise<Transaction[]> => {
     try {
         const userId = AuthService.decodeToken();
-        console.log(userId);
-        const response = await fetch(`/api/transactions/users/${userId}/${timeframe}`, {
+        console.log("transaction.userId:", userId)
+        const response = await fetch(`/api/transactions/${userId}/${timeframe}`, {
             method: "GET",
             headers: {
-                "Content-Type": "application/json",
                 Authorization: `Bearer ${AuthService.getToken()}`,
             }
         }
@@ -28,21 +27,24 @@ export const fetchUserTransactions = async (timeframe: string): Promise<Transact
 
 export const fetchTransactions = async () => {   
     const userId = AuthService.decodeToken();
-    console.log(userId);
     const response = await fetch(`/api/transactions/${userId}`, {
         method: "GET",
         headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${AuthService.getToken()}`,
         }
-    })
-    return response.json();
+    });
+    if (!response.ok) {
+        throw new Error('Error fetching transactions');
+    }
+    const data = response.json();
+    console.log(data);
+    return data;
 }
 
 
 export const addTransaction = async (transaction: any) => {
     const userId = AuthService.decodeToken();
-    console.log(userId);
+    try {
     const response = await fetch(`/api/transactions/${userId}`, {
         method: "POST",
         headers: {
@@ -51,15 +53,23 @@ export const addTransaction = async (transaction: any) => {
         },
         body: JSON.stringify(transaction),
     });
+
     if (!response.ok) {
-        throw new Error("failed to add transaction");
+        throw new Error("Invalid API response, check network tab!");
     }
-    return response.json();
+    const data = response.json()
+    return data;
+} catch (err) {
+return Promise.reject('Could not create Transaction.')
+
+}
+    
 };
 
 export const updateTransaction = async (transactionId: string, transaction: any) => {
     const userId = AuthService.decodeToken();
-    const response = await fetch(`api/transactions/users/${userId}/${transactionId}`, {
+    const transactionid = transactionId;
+    const response = await fetch(`api/transactions/${userId}/${transactionid}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -70,12 +80,13 @@ export const updateTransaction = async (transactionId: string, transaction: any)
     if (!response.ok) {
         throw new Error('Failed ot update transaction');
     }
-    return response.json();
+    const updatedTransaction = await response.json();
+    return updatedTransaction;
 };
 
 export const deleteTransaction = async (transactionId: string) => {
     const userId = AuthService.decodeToken();
-    const response = await fetch(`/api/transactions/users/${userId}/${transactionId}`, {
+    const response = await fetch(`/api/transactions/${userId}/${transactionId}`, {
         method: "DELETE",
         headers: {
             Authorization: `Bearer ${AuthService.getToken()}`,

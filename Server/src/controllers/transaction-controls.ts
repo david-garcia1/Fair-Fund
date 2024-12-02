@@ -5,7 +5,7 @@ import { Transaction } from '../Models/transaction.js';
 
 
 export const getAllUserTransactions = async (req: Request, res: Response) => {
-    const id  = req.params.id;
+    const id  = req.params.userId;
     try {
         const user = await User.findByPk(id);
         if (user) {
@@ -23,16 +23,15 @@ export const getAllUserTransactions = async (req: Request, res: Response) => {
 
 export const createTransaction = async (req: Request, res: Response) => {
     const id: string = req.params.userId;
-    console.log(id);
-    const { amount, Date, Description } = req.body;
-    console.log( amount, Date, Description);
+    
+    const { amount, date, description } = req.body;
     try {
         const user = await User.findByPk(id);
         if (user) {
             const transaction = await Transaction.create({
                 amount: amount,
-                Date: Date,
-                Description: Description,
+                date: date,
+                description: description,
                 userId: id,
             });
             res.json(transaction);
@@ -40,34 +39,37 @@ export const createTransaction = async (req: Request, res: Response) => {
             res.status(404).json({ message: 'User not found' });
         }
     } catch (err: any) {
+        console.log(amount, Date, description);
         res.status(500).json({ message: err.message });
     }
 };
 
 
-// look into using Transaction.save instead of update.
+
 export const updateTransaction = async (req: Request, res: Response) => {
-    const transactionId  = req.params.transactionId;
+    const transactionId  = req.body.transactionId;
     const userId  = req.params.userId
-    const { newAmount, Date, Description } = req.body;
+    const { amount, date, description } = req.body;
     try {
-        const [updatedTransaction] = await Transaction.update(
-            { 
-                amount: newAmount,
-                Date: Date,
-                Description: Description,
-            },
+        const transaction = await Transaction.findOne(
             { where: { 
                 transactionId: transactionId,
                 userId: userId,
-            }}
-        );
-        if (updatedTransaction === 0) {
-            console.log('This transaction could not be updated.');
-        } else {
-            console.log(`Transaction ${transactionId} updated successfully.`);
-        }
+            }});
+
+        if (!transaction) {
+        res.status(404).json({ message: `Transaction ${transactionId} could not be found.`});
+        return;
+    } 
+    console.log('Fetched transaction:', transaction);
+        transaction.transactionId = transactionId;
+        transaction.amount = amount;
+        transaction.date = date;
+        transaction.description = description;
+        await transaction.save();
+        res.json(transaction);
     } catch (err: any) {
+        
         res.status(500).json({ message: err.message });
     }
 };
@@ -76,7 +78,7 @@ export const deleteTransaction = async (req: Request, res: Response) => {
     const transactionId  = req.params.transactionId;
     const userId = req.params.userId;
     try {
-        const targetTransaction = await Transaction.destroy(
+        const deletedCount = await Transaction.destroy(
             { where: 
                 { 
                     transactionId: transactionId,
@@ -84,10 +86,12 @@ export const deleteTransaction = async (req: Request, res: Response) => {
                 }
             }
         );
-        if (targetTransaction) {
-            console.log(`Transaction ${transactionId} was not able to be delected.`);
-        } else {
+        if (deletedCount > 0) {
             console.log(`Transaction ${transactionId} was deleted.`);
+            res.status(200).json({ message: `Transaction ${transactionId} deleted succesfully.`});
+        } else {
+            console.log(`Transaction ${transactionId} was not found or could not be deleted.`);
+            res.status(404).json({ message: `Transaction ${transactionId} not found.`});
         }
     } catch (err: any) {
         res.status(500).json({ message: err.message });
