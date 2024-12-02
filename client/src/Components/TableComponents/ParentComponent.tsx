@@ -3,6 +3,7 @@ import { fetchTransactions, addTransaction, updateTransaction, deleteTransaction
 import TransactionTable from './Table';
 import TransactionModal from './Modal';
 import { Transaction } from '../../Interfaces/Transaction';
+import '../../App.css';
 
 const TransactionManager: React.FC = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -65,8 +66,8 @@ const TransactionManager: React.FC = () => {
 
   return (
     <div>
-      <h1>Transaction Management</h1>
-      <button onClick={() => setModalOpen(true)}>Add Transaction</button>
+      <h1 className="table-title">Transaction Management</h1>
+      <button className="add-button" onClick={() => setModalOpen(true)}>Add Transaction</button>
 
       <TransactionTable 
         transactions={transactions} 

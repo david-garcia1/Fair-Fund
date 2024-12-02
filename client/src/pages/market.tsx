@@ -1,5 +1,18 @@
 const MarketPage = () => {
-    return <h1>Welcome to the Market Page</h1>;
-  };
+
+
+
+
+
+
+    return (
+    <div>
+      <h1>Welcome to the Market Page</h1>
+      <p>
+        {}
+      </p>
+    </div>
+
+  )};
   
   export default MarketPage;

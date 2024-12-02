@@ -15,8 +15,8 @@ const Navbar: React.FC = () => {
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light navbarCustom">
-            <div className="container-fluid">
-                <Link className="navbar-brand" to="/">
+            <div className="container-fluid navbar-container">
+                <Link className="navbar-brand navbar-title" to="/">
                     FairFund
                 </Link>
 
@@ -28,17 +28,17 @@ const Navbar: React.FC = () => {
                     <ul className="navbar-nav ml-auto">
                         {isAuthenticated ? (
                             <>
-                                <li className="nav-item">
+                                <li className="nav-item navbar-link">
                                     <Link className="nav-link" to="/">
                                         Home
                                     </Link>
                                 </li>
-                                <li className="nav-item">
+                                <li className="nav-item navbar-link">
                                     <Link className="nav-link" to="/Market">
                                         MarketWatch
                                     </Link>
                                 </li>
-                                <li className="nav-item">
+                                <li className="nav-item navbar-logout">
                                     <button className="btn btn-link nav-link" onClick={handleLogout}>
                                         Logout
                                     </button>

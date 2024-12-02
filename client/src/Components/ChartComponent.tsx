@@ -13,31 +13,40 @@ const TransactionChart: React.FC = () => {
     const fetchTransactions = async (timeframe: string) => {
         const userId = AuthService.decodeToken();
         if (!userId) {
-            console.error("User ID not found");
             return;
         }
 
         try {
-            const fetchedTransactions = await fetchUserTransactions(timeframe);
-            setTransactions(fetchedTransactions);
+            const fectchedTransactions = await fetchUserTransactions(timeframe);
+            setTransactions(fectchedTransactions);
         } catch (err) {
             console.error("Error fetching transactions:", err);
         }
     };
-
+    // empty array so that the chart loads on the mount and not just when a timeframe is clicked.
     useEffect(() => {
-        fetchTransactions(timeframe);
+        const loadTransactions = async () => {
+            await fetchTransactions(timeframe);
+        };
+        loadTransactions();
     }, [timeframe]);
 
     const getChartData = () => {
-        const labels = transactions.map(transaction => new Date(transaction.date).toLocaleDateString());
-        const data = transactions.map(transaction => transaction.amount);
+        const sortedTransactions = [...transactions].sort((a, b) => {
+            return new Date(a.date).getTime() - new Date(b.date).getTime();
+        });
+        const labels = sortedTransactions.map(transaction => new Date(transaction.date).toLocaleDateString());
 
+        const data = sortedTransactions.reduce<number[]>((acc, transaction) => {
+            let previousTotal = acc.length > 0 ? acc[acc.length - 1] : 0;
+            acc.push(previousTotal + transaction.amount);
+            return acc;
+        }, []);
         return {
             labels: labels,
             datasets: [
                 {
-                    label: "Transaction Amount",
+                    label: "Cumulative Transaction Amount",
                     data: data,
                     borderColor: "rgba(75,192,192,1)",
                     backgroundColor: "rgba(75,192,192,0.2)",
@@ -78,24 +87,25 @@ const TransactionChart: React.FC = () => {
                     },
                 },
             },
+            
         });
 
         return () => {
             chart.destroy();
-        };
+        }
     }, [transactions, timeframe]);
 
     return (
         <div className="container">
             <h2>Transactions</h2>
             <div className="btn-group mb-4">
-                <button className="btn btn-primary" onClick={() => setTimeframe("week")}>
+                <button className="btn btn-primary" onClick={() => setTimeframe("Week")}>
                     Last Week
                 </button>
-                <button className="btn btn-primary" onClick={() => setTimeframe("month")}>
+                <button className="btn btn-primary" onClick={() => setTimeframe("Month")}>
                     Last Month
                 </button>
-                <button className="btn btn-primary" onClick={() => setTimeframe("ytd")}>
+                <button className="btn btn-primary" onClick={() => setTimeframe("YTD")}>
                     Year to Date
                 </button>
             </div>

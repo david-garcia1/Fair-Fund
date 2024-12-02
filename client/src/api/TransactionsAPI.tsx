@@ -4,7 +4,6 @@ import AuthService from '../utils/auth';
 export const fetchUserTransactions = async (timeframe: string): Promise<Transaction[]> => {
     try {
         const userId = AuthService.decodeToken();
-        console.log("transaction.userId:", userId)
         const response = await fetch(`/api/transactions/${userId}/${timeframe}`, {
             method: "GET",
             headers: {

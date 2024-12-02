@@ -1,10 +1,4 @@
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
   body {
     font-family: Arial, sans-serif;
     background-color: #f3f4f6;  
@@ -13,13 +7,19 @@
   
   .login-container {
     height: 100%;
+    width: 500px;
+    justify-content: center;
+    align-items: center;
   }
   
   .login-card {
     background-color: white;
     padding: 30px;
+    width: 400px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    justify-content: center;
+    align-items: center;
   }
   
   h2 {
