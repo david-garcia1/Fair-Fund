@@ -3,9 +3,11 @@
     font-family: Arial, sans-serif;
     background-color: #f3f4f6;  
     height: 100vh;
+    
   }
   
   .login-container {
+    display: flex;
     height: 100%;
     width: 500px;
     justify-content: center;
