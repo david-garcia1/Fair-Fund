@@ -10,7 +10,9 @@ Our Motivation: Keeping track of expenses is crucial for financial awareness and
 <img width="1680" alt="Screenshot 2024-12-01 at 9 56 30 PM" src="https://github.com/user-attachments/assets/6e6c61c0-3e3d-4fc5-b1ec-43ef09d6c62c">
 
 
-
+Want to try it yourself?
+Just follow this link:
+<a href="https://fair-fund.onrender.com/" target="https://fair-fund.onrender.com/">https://fair-fund.onrender.com/</a>
 
 
  
