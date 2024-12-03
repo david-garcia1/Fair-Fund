@@ -1,4 +1,4 @@
-// src/components/FavoritesList.tsx
+
 import React, { useEffect, useState } from 'react';
 import { fetchFavorites } from '../../api/cardAPI';
 

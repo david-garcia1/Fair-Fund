@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
-import  AuthService from '../../utils/auth.js';
+import  AuthService from '../../utils/auth';
 
 
 interface AuthContextType {

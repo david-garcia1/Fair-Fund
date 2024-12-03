@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { UserRegistration } from '../api/UserRegistration.js';
+import { UserRegistration } from '../api/UserRegistration';
 
 
 const Register: React.FC = () => {
