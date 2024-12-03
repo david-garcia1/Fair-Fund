@@ -39,7 +39,6 @@ export const createTransaction = async (req: Request, res: Response) => {
             res.status(404).json({ message: 'User not found' });
         }
     } catch (err: any) {
-        console.log(amount, Date, description);
         res.status(500).json({ message: err.message });
     }
 };
