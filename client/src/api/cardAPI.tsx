@@ -1,12 +1,11 @@
 import AuthService from '../utils/auth';
 
 const FMP_API_URL = 'https://financialmodelingprep.com/api/v3/';
-const FMP_API_KEY = 'J9VPeW6VdlfZ5dGzXcdPl9qdU0bkzBH1'
 
 
 export const fetchMarketData = async () => {
     try {
-        const response = await fetch(`${FMP_API_URL}stock/list?apikey=${FMP_API_KEY}`);
+        const response = await fetch(`${FMP_API_URL}stock/list?apikey=${process.env.FMP_API_KEY}`);
         const data = response.json();
         return data;
     } catch (err) {
