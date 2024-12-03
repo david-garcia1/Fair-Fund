@@ -58,6 +58,41 @@ body {
   transition: filter 300ms;
 }
 
+
+.market-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.market-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.market-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  background: #fff;
+}
+
+.market-card h3 {
+  margin: 0 0 10px;
+}
+
+.market-card p {
+  margin: 8px 0;
+}
+
+.market-card button {
+  margin-top: 10px;
+}
+
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
