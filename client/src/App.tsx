@@ -1,12 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./Pages/home";
-import Navbar from "./Components/Navbar.tsx";
-import MarketPage from "./Pages/market.tsx";
+import Navbar from "./Components/Navbar";
+import MarketPage from "./Pages/market";
 import Login from './Components/loginComponent';
-import Register from "./Components/Register.tsx";
-import ProtectedRoute from "./Components/AuthContext/ProtectedRoute.tsx";
-import Footer from "./Components/Footer.tsx";
+import Register from "./Components/Register";
+import ProtectedRoute from "./Components/AuthContext/ProtectedRoute";
+import Footer from "./Components/Footer";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
